@@ -1,0 +1,68 @@
+-- CREATE statements:
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(100),
+    password VARCHAR(100),
+    user_name VARCHAR(100),
+    created DATE,
+    modified DATE
+);
+
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    total INTEGER,
+    status VARCHAR(100),
+    created DATE,
+    modified DATE,
+    user_id INTEGER REFERENCES users(id)
+);
+
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    price INTEGER,
+    description VARCHAR(100),
+    created DATE,
+    modified DATE
+);
+
+CREATE TABLE carts (
+    id SERIAL PRIMARY KEY,
+    created DATE,
+    modified DATE
+);
+
+CREATE TABLE order_items (
+    id SERIAL PRIMARY KEY,
+    quantity INTEGER,
+    price INTEGER,
+    created DATE,
+    modified DATE,
+    order_id INTEGER REFERENCES orders(id),
+    product_id INTEGER REFERENCES products(id)
+
+);
+
+CREATE TABLE cart_items (
+    id SERIAL PRIMARY KEY,
+    created DATE,
+    modified DATE,
+    product_id INTEGER REFERENCES products(id),
+    cart_id INTEGER REFERENCES carts(id)
+);
+
+-- INSERT statements:
+
+INSERT INTO users (email, user_name, password)
+VALUES ('john@gmail.com', 'John', 'unhashedPassword'),
+	   ('george@gmail.com', 'George', 'unhashedPassword');
+
+-- Reset:
+
+DROP TABLE users;
+DROP TABLE orders;
+DROP TABLE products;
+DROP TABLE carts;
+DROP TABLE order_items;
+DROP TABLE cart_items;

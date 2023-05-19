@@ -1,0 +1,22 @@
+Signup:
+
+POST
+http://localhost:3000/auth/signup
+(Body, raw, JSON)
+
+{
+    "email": "jack@gmail.com",
+    "user_name": "Jack",
+    "password": "myPassword"
+}
+
+Login:
+
+POST
+http://localhost:3000/auth/login
+(Body, raw, JSON)
+
+{
+    "email": "michael@gmail.com",
+    "password": "password"
+}
