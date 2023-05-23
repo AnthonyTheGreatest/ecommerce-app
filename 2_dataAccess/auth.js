@@ -1,8 +1,9 @@
-const bcrypt = require('bcryptjs');
-const { query } = require('../1_db/index');
+import bcrypt from 'bcryptjs';
+import moment from 'moment';
+import db from '../1_db/index.js';
 
 const userById = async (id) => {
-    const { rows } = await query(
+    const { rows } = await db(
         'SELECT * FROM users WHERE id = $1',
         [id]
     );
@@ -10,7 +11,7 @@ const userById = async (id) => {
 }
 
 const emailExists = async (email) => {
-    const { rows } = await query(
+    const { rows } = await db(
         'SELECT * FROM users WHERE email = $1',
         [email]
     );
@@ -23,7 +24,7 @@ const createUser = async (email, password, user_name) => {
     const hash = await bcrypt.hash(password, salt);
     // Create 'created' timestamp:
     const created = moment.utc().format('YYYY-MM-DD');
-    const { rows } = await query(
+    const { rows } = await db(
         // Use RETURNING clause so 'rows' returns the user. (equivalent to for example: 'SELECT * FROM users WHERE email = $1')
         'INSERT INTO users (email, password, user_name, created) VALUES ($1, $2, $3, $4) RETURNING *',
         [email, hash, user_name, created]
@@ -37,10 +38,4 @@ const matchPassword = async (password, hashedPassword) => {
     // Returns true or false.
 };
 
-module.exports = {
-    userById,
-    emailExists,
-    createUser,
-    matchPassword
-    // Exported to:
-};
+export { userById, emailExists, createUser, matchPassword };

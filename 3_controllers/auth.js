@@ -1,17 +1,5 @@
-const LocalStrategy = require('passport-local');
-const moment = require('moment');
-const auth = require('../2_dataAccess/auth');
-
-// constructor(data = {}) {
-//     this.created = data.created || moment.utc().toISOString();
-//     this.description = data.description;
-//     this.modified = moment.utc().toISOString();
-//     this.name = data.name;
-//     this.price = data.price || 0;
-//     this.productId = data.id;
-//     this.qty = data.qty || 1;
-//     this.orderId = data.orderId || null;
-//   }
+import LocalStrategy from 'passport-local';
+import * as dataAccess from '../2_dataAccess/auth.js';
 
 const config = (passport) => {
     // Signup:
@@ -25,11 +13,10 @@ const config = (passport) => {
             },
             async (req, email, password, cb) => {
                 const { user_name } = req.body;
-                created = created || moment.utc().toISOString();
                 try {
-                    const userExists = await auth.emailExists(email);
+                    const userExists = await dataAccess.emailExists(email);
                     if (userExists) return cb(null, false, { message: 'Email already in use.' });
-                    const user = await auth.createUser(email, password, user_name);
+                    const user = await dataAccess.createUser(email, password, user_name);
                     return cb(null, user);
                 } catch (error) {
                     return cb(error);
@@ -47,9 +34,9 @@ const config = (passport) => {
             },
             async (email, password, cb) => {
                 try {
-                    const user = await auth.emailExists(email);
+                    const user = await dataAccess.emailExists(email);
                     if (!user) return cb(null, false, { message: 'Incorrect email.' });
-                    const isMatch = await auth.matchPassword(password, user.password);
+                    const isMatch = await dataAccess.matchPassword(password, user.password);
                     if (!isMatch) return cb(null, false, { message: 'Incorrect password.' });
                     return cb(null, user);
                 } catch (error) {
@@ -65,14 +52,11 @@ const config = (passport) => {
     // Deserialization:
     // (req.user)
     passport.deserializeUser(async (id, cb) => {
-        const user = await auth.userById(id);
+        const user = await dataAccess.userById(id);
         cb(null, user);
     });
-    // ?
+    // ?:
     return passport;
 };
 
-module.exports = {
-    config
-    // Exported to:
-};
+export default config;

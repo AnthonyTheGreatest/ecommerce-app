@@ -1,14 +1,20 @@
-const express = require('express');
+import express from 'express';
 const app = express();
-require('dotenv').config();
-const morgan = require('morgan');
-const passport = require('passport');
-const session = require('express-session');
-const MemoryStore = require('memorystore')(session); // Storage for session data (for development and testing purposes).
-const authRouter = require('./auth');
-const userRouter = require('./user');
+import dotenv from 'dotenv';
+dotenv.config();
+import morgan from 'morgan';
+import passport from 'passport';
+import session from 'express-session';
+import memorystore from 'memorystore';
+const MemoryStore = memorystore(session); // Storage for session data (for development and testing purposes).
+import helmet from 'helmet';
+import authRouter from './4_routes/auth.js';
+import userRouter from './4_routes/user.js';
 
 const port = process.env.PORT || 3001;
+
+// Helmet helps secure Express apps by setting HTTP response headers.
+app.use(helmet());
 
 // HTTP request logger middleware
 app.use(morgan('tiny'));  // (:method :url :status :res[content-length] - :response-time ms)

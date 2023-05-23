@@ -1,8 +1,9 @@
-const { Router } = require('express');
+import { Router } from 'express';
 const router = Router();
-const passport = require('passport');
-const { config } = require('../3_controllers/auth');
+import passport from 'passport';
+import config from '../3_controllers/auth.js';
 config(passport);
+
 
 router.post(
     '/signup',
@@ -38,4 +39,4 @@ router.post(
     }
 );
 
-module.exports = router;
+export default router;
