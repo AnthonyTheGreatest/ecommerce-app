@@ -6,9 +6,9 @@ const pool = new Pool({
     host: process.env.PGHOST,
     database: process.env.PGDATABASE,
     password: process.env.PGPASSWORD,
-    port: process.env.PGPORT
+    port: parseInt(process.env.PGPORT ?? '5432') // nullish coalescing operator 
 });
 
-const query = (text, params) => pool.query(text, params);
+const query = (text: string, params: string[]) => pool.query(text, params);
 
 export default query;

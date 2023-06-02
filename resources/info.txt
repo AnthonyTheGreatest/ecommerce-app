@@ -1,5 +1,8 @@
 https://www.makeuseof.com/passport-authenticate-node-postgres/
 https://www.passportjs.org/concepts/authentication/middleware/
+How To Use TypeScript With Express & Node:
+https://www.youtube.com/watch?v=qy8PxD3alWw
+https://www.youtube.com/watch?v=H91aqUHn8sE
 
 ERD:
 https://lucid.app/lucidchart/8d80cf5f-df43-4cfe-ae05-d3a8a4556f56/edit?invitationId=inv_90f4be76-a529-4cb1-9e01-8d53d3c991e5&page=0_0#

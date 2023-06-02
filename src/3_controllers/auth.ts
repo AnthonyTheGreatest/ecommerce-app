@@ -1,7 +1,7 @@
-import LocalStrategy from 'passport-local';
+import {Strategy as LocalStrategy } from 'passport-local';
 import * as dataAccess from '../2_dataAccess/auth.js';
 
-const config = (passport) => {
+const config = (passport: any) => {
     // Signup:
     passport.use(
         'local-signup',
@@ -11,7 +11,7 @@ const config = (passport) => {
                 passwordField: 'password',
                 passReqToCallback: true // Allows passing additional fields to the callback from the request body.
             },
-            async (req, email, password, cb) => {
+            async (req, email: string, password: string, cb: any) => {
                 const { user_name } = req.body;
                 try {
                     const userExists = await dataAccess.emailExists(email);
@@ -32,7 +32,7 @@ const config = (passport) => {
                 usernameField: 'email',
                 passwordField: 'password'
             },
-            async (email, password, cb) => {
+            async (email: string, password: string, cb: any) => {
                 try {
                     const user = await dataAccess.emailExists(email);
                     if (!user) return cb(null, false, { message: 'Incorrect email.' });
@@ -46,12 +46,12 @@ const config = (passport) => {
         )
     );
     // Serialization:
-    passport.serializeUser((user, cb) => {
+    passport.serializeUser((user: any, cb: any) => {
         cb(null, user.id);
     });
     // Deserialization:
     // (req.user)
-    passport.deserializeUser(async (id, cb) => {
+    passport.deserializeUser(async (id: string, cb: any) => {
         const user = await dataAccess.userById(id);
         cb(null, user);
     });
