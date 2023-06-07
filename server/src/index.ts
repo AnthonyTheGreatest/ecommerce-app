@@ -11,7 +11,7 @@ import helmet from 'helmet';
 import authRouter from './4_routes/auth.js';
 import userRouter from './4_routes/user.js';
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 5001;
 
 // Helmet helps secure Express apps by setting HTTP response headers.
 app.use(helmet());
